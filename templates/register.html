@@ -1,0 +1,497 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Register</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f5f5f5;
+    overflow-x:hidden;
+}
+
+nav{
+    width:100%;
+    background:#b30000;
+    padding:18px 70px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:white;
+    font-size:32px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    transition:.3s;
+}
+
+nav ul li a:hover{
+    color:#ffd6d6;
+}
+
+.register-section{
+    width:100%;
+    min-height:90vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px 20px;
+}
+
+.register-box{
+    width:100%;
+    max-width:700px;
+    background:white;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+}
+
+.register-box h1{
+    text-align:center;
+    color:#b30000;
+    margin-bottom:30px;
+    font-size:45px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.input-box input,
+.input-box select{
+    width:100%;
+    padding:15px;
+    border:1px solid #ccc;
+    outline:none;
+    border-radius:6px;
+    font-size:16px;
+}
+
+.password-box{
+    position:relative;
+}
+
+.toggle-password{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    font-size:20px;
+    color:#555;
+}
+
+.register-box button{
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#b30000;
+    color:white;
+    font-size:18px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.4s;
+    margin-top:20px;
+}
+
+.register-box button:hover{
+    background:#700000;
+}
+
+.bottom-text{
+    text-align:center;
+    margin-top:20px;
+}
+
+.bottom-text a{
+    color:#b30000;
+    text-decoration:none;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+#msg-box{
+    color:white;
+    padding:15px;
+    text-align:center;
+    font-size:18px;
+}
+
+.success{
+    background:green;
+}
+
+.error{
+    background:red;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    nav{
+        padding:15px 20px;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+    nav ul li a{
+        font-size:16px;
+    }
+
+    .register-box{
+        padding:30px 20px;
+    }
+
+    .register-box h1{
+        font-size:35px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .logo{
+        font-size:28px;
+    }
+
+    .register-section{
+        padding:30px 15px;
+    }
+
+    .register-box h1{
+        font-size:28px;
+    }
+
+    .input-box input,
+    .input-box select{
+        padding:13px;
+        font-size:15px;
+    }
+
+    .register-box button{
+        font-size:16px;
+        padding:13px;
+    }
+
+    .bottom-text p{
+        font-size:15px;
+    }
+
+}
+
+</style>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        <div id="msg-box"
+             class="{% if message.tags == 'success' %}success{% else %}error{% endif %}">
+
+            {{ message }}
+
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+<nav>
+
+    <div class="logo">
+        BloodBank
+    </div>
+
+    <ul>
+
+        <li><a href="{% url 'home' %}">Home</a></li>
+
+        <li><a href="{% url 'login' %}">Login</a></li>
+
+        <li><a href="{% url 'register' %}">Register</a></li>
+
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+
+        <li><a href="{% url 'about' %}">About</a></li>
+
+    </ul>
+
+</nav>
+
+<section class="register-section">
+
+    <div class="register-box">
+
+        <h1>Create Account</h1>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="form-grid">
+
+                <div class="input-box">
+
+                    <input type="text"
+                           name="name"
+                           placeholder="Enter Full Name"
+                           required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <input type="email"
+                           name="email"
+                           placeholder="Enter Email"
+                           required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <input type="text"
+                           name="phone"
+                           placeholder="Enter Phone Number"
+                           required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <input type="number"
+                           name="age"
+                           placeholder="Enter Age"
+                           min="18"
+                           max="60"
+                           required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <select name="blood_group" required>
+
+                        <option value="">
+                            Select Blood Group
+                        </option>
+
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-box">
+
+                    <select name="role" required>
+
+                        <option value="">
+                            Select Role
+                        </option>
+
+                        <option>Donor</option>
+
+                        <option>Patient</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-box password-box">
+
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           placeholder="Create Password"
+                           required>
+
+                    <span class="toggle-password"
+                          onclick="togglePassword()">
+
+                        <i class="fa-solid fa-eye-slash"></i>
+
+                    </span>
+
+                </div>
+
+                <div class="input-box password-box">
+
+                    <input type="password"
+                           id="confirm_password"
+                           placeholder="Confirm Password"
+                           required>
+
+                    <span class="toggle-password"
+                          onclick="toggleConfirmPassword()">
+
+                        <i class="fa-solid fa-eye-slash"></i>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <button type="submit">
+                Register
+            </button>
+
+        </form>
+
+        <div class="bottom-text">
+
+            <p>
+                Already Have Account ?
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>
+        Blood Bank Management System © 2026
+    </p>
+
+</footer>
+
+<script>
+
+function togglePassword(){
+
+    let password=document.getElementById("password");
+
+    let icon=document.querySelectorAll(".toggle-password i")[0];
+
+    if(password.type==="password"){
+
+        password.type="text";
+
+        icon.classList.remove("fa-eye-slash");
+
+        icon.classList.add("fa-eye");
+
+    }
+
+    else{
+
+        password.type="password";
+
+        icon.classList.remove("fa-eye");
+
+        icon.classList.add("fa-eye-slash");
+
+    }
+
+}
+
+function toggleConfirmPassword(){
+
+    let password=document.getElementById("confirm_password");
+
+    let icon=document.querySelectorAll(".toggle-password i")[1];
+
+    if(password.type==="password"){
+
+        password.type="text";
+
+        icon.classList.remove("fa-eye-slash");
+
+        icon.classList.add("fa-eye");
+
+    }
+
+    else{
+
+        password.type="password";
+
+        icon.classList.remove("fa-eye");
+
+        icon.classList.add("fa-eye-slash");
+
+    }
+
+}
+
+setTimeout(function(){
+
+    let msg=document.getElementById("msg-box");
+
+    if(msg){
+
+        msg.style.display="none";
+
+    }
+
+},3000);
+
+</script>
+
+</body>
+</html>

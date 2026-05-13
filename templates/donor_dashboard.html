@@ -1,0 +1,439 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Donor Dashboard</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f5f5f5;
+    overflow-x:hidden;
+}
+
+.msg-box{
+    color:white;
+    padding:15px;
+    text-align:center;
+    font-size:18px;
+}
+
+.success{
+    background:green;
+}
+
+.error{
+    background:red;
+}
+
+nav{
+    width:100%;
+    background:#b30000;
+    padding:18px 70px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:white;
+    font-size:32px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    transition:.3s;
+}
+
+nav ul li a:hover{
+    color:#ffd6d6;
+}
+
+.dashboard{
+    width:90%;
+    margin:60px auto;
+}
+
+.heading{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.heading h1{
+    color:#b30000;
+    font-size:50px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:white;
+    padding:40px 30px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card h2{
+    color:#b30000;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#555;
+    line-height:28px;
+    margin-bottom:20px;
+}
+
+.card a{
+    text-decoration:none;
+}
+
+.card button{
+    padding:12px 25px;
+    border:none;
+    background:#b30000;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.4s;
+}
+
+.card button:hover{
+    background:#700000;
+}
+
+.profile{
+    width:100%;
+    background:white;
+    margin-top:50px;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+}
+
+.profile h2{
+    color:#b30000;
+    margin-bottom:25px;
+}
+
+.profile-info{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.box{
+    background:#f5f5f5;
+    padding:20px;
+    border-radius:8px;
+}
+
+.box h3{
+    color:#b30000;
+    margin-bottom:10px;
+}
+
+.box p{
+    color:#555;
+    line-height:25px;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:25px;
+    margin-top:70px;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    nav{
+        padding:15px 20px;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+    nav ul li a{
+        font-size:16px;
+    }
+
+    .heading h1{
+        font-size:38px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .profile-info{
+        grid-template-columns:1fr;
+    }
+
+    .card,
+    .profile{
+        padding:30px 20px;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .logo{
+        font-size:28px;
+    }
+
+    .dashboard{
+        width:95%;
+        margin:40px auto;
+    }
+
+    .heading h1{
+        font-size:30px;
+    }
+
+    .card button{
+        width:100%;
+    }
+
+    .card p,
+    .box p{
+        font-size:15px;
+        line-height:25px;
+    }
+
+    .profile h2{
+        font-size:24px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        <div class="msg-box
+             {% if message.tags == 'success' %}
+                 success
+             {% else %}
+                 error
+             {% endif %}">
+
+            {{ message }}
+
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+<nav>
+
+    <div class="logo">
+        BloodBank
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'donor_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'donate_blood' %}">
+                Donate Blood
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+<section class="dashboard">
+
+    <div class="heading">
+
+        <h1>Donor Dashboard</h1>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h2>Blood Group</h2>
+
+            <p>
+                Your Registered Blood Group Is {{ donor.blood_group }}.
+            </p>
+
+            <a href="{% url 'update_profile' %}">
+
+                <button>
+                    Update Profile
+                </button>
+
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Donate Now</h2>
+
+            <p>
+                Help Patients By Donating Blood Today.
+            </p>
+
+            <a href="{% url 'donate_blood' %}">
+
+                <button>
+                    Donate Blood
+                </button>
+
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Total Donations</h2>
+
+            <p>
+
+                You Have Donated Blood
+                {{ total_donations }}
+                Times.
+
+            </p>
+
+            <button>
+                Thank You
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="profile">
+
+        <h2>Donor Profile</h2>
+
+        <div class="profile-info">
+
+            <div class="box">
+
+                <h3>Name</h3>
+
+                <p>{{ donor.name }}</p>
+
+            </div>
+
+            <div class="box">
+
+                <h3>Email</h3>
+
+                <p>{{ donor.email }}</p>
+
+            </div>
+
+            <div class="box">
+
+                <h3>Phone</h3>
+
+                <p>{{ donor.phone }}</p>
+
+            </div>
+
+            <div class="box">
+
+                <h3>Blood Group</h3>
+
+                <p>{{ donor.blood_group }}</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>
+        Blood Bank Management System © 2026
+    </p>
+
+</footer>
+
+<script>
+
+setTimeout(function(){
+
+    let msgs=document.querySelectorAll(".msg-box");
+
+    msgs.forEach(function(msg){
+
+        msg.style.display="none";
+
+    });
+
+},2000);
+
+</script>
+
+</body>
+</html>

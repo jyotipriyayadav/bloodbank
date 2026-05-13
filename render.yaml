@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: bloodbank
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn bloodbank.wsgi:application"
+
+    envVars:
+      - key: DEBUG
+        value: False

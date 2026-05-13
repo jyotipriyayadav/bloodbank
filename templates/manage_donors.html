@@ -1,0 +1,334 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Manage Donors</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f5f5f5;
+    overflow-x:hidden;
+}
+
+nav{
+    width:100%;
+    background:#b30000;
+    padding:18px 70px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:white;
+    font-size:32px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    transition:.3s;
+}
+
+nav ul li a:hover{
+    color:#ffd6d6;
+}
+
+.manage{
+    width:90%;
+    margin:60px auto;
+}
+
+.heading{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.heading h1{
+    color:#b30000;
+    font-size:50px;
+}
+
+.table-box{
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+table th{
+    background:#b30000;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+
+table td{
+    padding:15px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+.edit-btn{
+    padding:8px 18px;
+    border:none;
+    background:#0066cc;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+    margin-right:5px;
+    transition:.3s;
+}
+
+.delete-btn{
+    padding:8px 18px;
+    border:none;
+    background:#b30000;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.edit-btn:hover{
+    background:#004999;
+}
+
+.delete-btn:hover{
+    background:#700000;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:25px;
+    margin-top:70px;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    nav{
+        padding:15px 20px;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+    nav ul li a{
+        font-size:16px;
+    }
+
+    .heading h1{
+        font-size:38px;
+    }
+
+    .table-box{
+        padding:20px;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .logo{
+        font-size:28px;
+    }
+
+    .manage{
+        width:95%;
+        margin:40px auto;
+    }
+
+    .heading h1{
+        font-size:30px;
+    }
+
+    table th,
+    table td{
+        padding:12px;
+        font-size:14px;
+    }
+
+    .edit-btn,
+    .delete-btn{
+        padding:7px 12px;
+        font-size:13px;
+        margin-bottom:5px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        BloodBank
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'manage_donors' %}">
+                Manage Donors
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'manage_requests' %}">
+                Manage Requests
+            </a>
+        </li>
+
+        <li>
+           <a href="{% url 'logout' %}">
+             Logout
+           </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+<section class="manage">
+
+    <div class="heading">
+
+        <h1>Manage Donors</h1>
+
+    </div>
+
+    <div class="table-box">
+
+        <table>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Name</th>
+                <th>Blood Group</th>
+                <th>Phone</th>
+                <th>Country</th>
+                <th>Action</th>
+
+            </tr>
+
+            {% if donors %}
+
+                {% for donor in donors %}
+
+                <tr>
+
+                    <td>{{ donor.id }}</td>
+
+                    <td>{{ donor.name }}</td>
+
+                    <td>{{ donor.blood_group }}</td>
+
+                    <td>{{ donor.phone }}</td>
+
+                    <td>India</td>
+
+                    <td>
+
+                        <a href="{% url 'edit_donor' donor.id %}">
+
+                            <button type="button"
+                                    class="edit-btn">
+
+                                Edit
+
+                            </button>
+
+                        </a>
+
+                        <a href="{% url 'delete_donor' donor.id %}">
+
+                            <button type="button"
+                                    class="delete-btn">
+
+                                Delete
+
+                            </button>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            {% else %}
+
+                <tr>
+
+                    <td colspan="6">
+                        No Donors Available
+                    </td>
+
+                </tr>
+
+            {% endif %}
+
+        </table>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>
+        Blood Bank Management System © 2026
+    </p>
+
+</footer>
+
+</body>
+</html>

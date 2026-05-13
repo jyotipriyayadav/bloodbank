@@ -1,0 +1,410 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Blood Request</title>
+<style>
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f5f5f5;
+    overflow-x:hidden;
+}
+
+#message-box{
+    background:green;
+    color:white;
+    padding:15px;
+    text-align:center;
+    font-size:18px;
+    animation:fadein .4s;
+}
+
+@keyframes fadein{
+
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+nav{
+    width:100%;
+    background:#b30000;
+    padding:18px 70px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:white;
+    font-size:32px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    transition:.3s;
+}
+
+nav ul li a:hover{
+    color:#ffd6d6;
+}
+
+.request-section{
+    width:100%;
+    min-height:90vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:40px 20px;
+}
+
+.request-box{
+    width:100%;
+    max-width:750px;
+
+    background:white;
+    padding:40px;
+    border-radius:12px;
+
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+}
+
+.request-box h1{
+    text-align:center;
+    color:#b30000;
+    margin-bottom:30px;
+    font-size:45px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.input-box input,
+.input-box select,
+.input-box textarea{
+    width:100%;
+    padding:15px;
+    border:1px solid #ccc;
+    outline:none;
+    border-radius:6px;
+    font-size:16px;
+}
+
+.input-box textarea{
+    height:120px;
+    resize:none;
+}
+
+.request-box button{
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#b30000;
+    color:white;
+    font-size:18px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.4s;
+    margin-top:20px;
+}
+
+.request-box button:hover{
+    background:#700000;
+}
+
+.info{
+    margin-top:30px;
+    background:#f5f5f5;
+    padding:20px;
+    border-radius:10px;
+}
+
+.info h2{
+    color:#b30000;
+    margin-bottom:15px;
+}
+
+.info p{
+    color:#555;
+    line-height:28px;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    nav{
+        padding:15px 20px;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+    nav ul li a{
+        font-size:16px;
+    }
+
+    .request-box{
+        padding:30px 20px;
+    }
+
+    .request-box h1{
+        font-size:35px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .logo{
+        font-size:28px;
+    }
+
+    .request-box h1{
+        font-size:28px;
+    }
+
+    .input-box input,
+    .input-box select,
+    .input-box textarea{
+        padding:13px;
+        font-size:15px;
+    }
+
+    .request-box button{
+        font-size:16px;
+    }
+
+    .info p{
+        font-size:15px;
+        line-height:25px;
+    }
+
+}
+</style>
+</head>
+<body>
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        <div id="message-box">
+
+            {{ message }}
+
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+<nav>
+
+    <div class="logo">
+        BloodBank
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'blood_request' %}">
+                Request Blood
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'blood_availability' %}">
+                Blood Availability
+            </a>
+        </li>
+
+        <li>
+           <a href="{% url 'logout' %}">
+             Logout
+           </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+<section class="request-section">
+
+    <div class="request-box">
+
+        <h1>Blood Request Form</h1>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="form-grid">
+
+                <div class="input-box">
+
+                    <input type="text"
+                           name="patient_name"
+                           placeholder="Enter Patient Name"
+                           required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <input type="number"
+                           placeholder="Enter Age"
+                           required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <select name="blood_group" required>
+
+                        <option value="">
+                            Select Required Blood Group
+                        </option>
+
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-box">
+
+                    <input type="text"
+                           name="hospital"
+                           placeholder="Enter Hospital Name"
+                           required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <input type="text"
+                           name="city"
+                           placeholder="Enter City"
+                           required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <input type="tel"
+                           name="contact"
+                           placeholder="Enter Contact Number"
+                           required>
+
+                </div>
+
+            </div>
+
+            <div class="input-box" style="margin-top:20px;">
+
+                <textarea placeholder="Enter Emergency Details"></textarea>
+
+            </div>
+
+            <button type="submit">
+                Submit Request
+            </button>
+
+        </form>
+
+        <div class="info">
+
+            <h2>Emergency Support</h2>
+
+            <p>
+                Our blood bank team will try to provide blood as soon as possible.
+                Please provide correct details for faster response.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>
+        Blood Bank Management System © 2026
+    </p>
+
+</footer>
+
+<script>
+
+setTimeout(function(){
+
+    let message=document.getElementById("message-box");
+
+    if(message){
+
+        message.style.display="none";
+
+    }
+
+},2000);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f5f5f5;
+    overflow-x:hidden;
+}
+
+/* Message Box */
+
+.msg-box{
+    color:white;
+    padding:15px;
+    text-align:center;
+    font-size:18px;
+}
+
+.success{
+    background:green;
+}
+
+.error{
+    background:red;
+}
+
+nav{
+    width:100%;
+    background:#b30000;
+    padding:18px 70px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:white;
+    font-size:32px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    transition:.3s;
+}
+
+nav ul li a:hover{
+    color:#ffd6d6;
+}
+
+.dashboard{
+    width:90%;
+    margin:60px auto;
+}
+
+.heading{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.heading h1{
+    color:#b30000;
+    font-size:50px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:white;
+    padding:40px 30px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card h2{
+    color:#b30000;
+    margin-bottom:15px;
+    font-size:30px;
+}
+
+.card h1{
+    font-size:50px;
+    color:#333;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#555;
+    line-height:28px;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:25px;
+    margin-top:70px;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    nav{
+        padding:15px 20px;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+    nav ul li a{
+        font-size:16px;
+    }
+
+    .heading h1{
+        font-size:38px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:30px 20px;
+    }
+
+    .card h2{
+        font-size:26px;
+    }
+
+    .card h1{
+        font-size:40px;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .logo{
+        font-size:28px;
+    }
+
+    .dashboard{
+        width:95%;
+        margin:40px auto;
+    }
+
+    .heading h1{
+        font-size:30px;
+    }
+
+    .card h2{
+        font-size:22px;
+    }
+
+    .card h1{
+        font-size:34px;
+    }
+
+    .card p{
+        font-size:15px;
+        line-height:25px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        <div class="msg-box
+             {% if message.tags == 'success' %}
+                 success
+             {% else %}
+                 error
+             {% endif %}">
+
+            {{ message }}
+
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+<nav>
+
+    <div class="logo">
+        BloodBank
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'admin_dashboard' %}">
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'manage_donors' %}">
+                Manage Donors
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'manage_requests' %}">
+                Manage Requests
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+              Logout
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+<section class="dashboard">
+
+    <div class="heading">
+
+        <h1>Admin Dashboard</h1>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h2>Total Donors</h2>
+
+            <h1>{{ total_donors }}</h1>
+
+            <p>
+                Registered Blood Donors
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Total Requests</h2>
+
+            <h1>{{ total_requests }}</h1>
+
+            <p>
+                Blood Requests Received
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Blood Units</h2>
+
+            <h1>{{ total_donations }}</h1>
+
+            <p>
+                Available Blood Units
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>
+        Blood Bank Management System © 2026
+    </p>
+
+</footer>
+
+<script>
+
+setTimeout(function(){
+
+    let msgs=document.querySelectorAll(".msg-box");
+
+    msgs.forEach(function(msg){
+
+        msg.style.display="none";
+
+    });
+
+},2000);
+
+</script>
+
+</body>
+</html>

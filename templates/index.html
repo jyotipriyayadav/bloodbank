@@ -1,0 +1,513 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Blood Bank Management System</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f5f5f5;
+    overflow-x:hidden;
+}
+
+nav{
+    width:100%;
+    background:#b30000;
+    padding:18px 70px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1000;
+}
+
+.logo{
+    color:white;
+    font-size:32px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    transition:.3s;
+}
+
+nav ul li a:hover{
+    color:#ffd6d6;
+}
+
+.banner{
+    width:100%;
+    height:100vh;
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    text-align:center;
+    color:white;
+    padding:20px;
+    padding-top:120px;
+}
+
+.banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.overlay{
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.6);
+
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.content{
+    position:relative;
+    z-index:10;
+}
+
+.content h1{
+    font-size:75px;
+    margin-bottom:20px;
+    animation:slideDown 1s ease;
+}
+
+.content p{
+    width:70%;
+    margin:auto;
+    font-size:22px;
+    line-height:35px;
+    animation:fadeIn 2s ease;
+}
+
+.buttons{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+    flex-wrap:wrap;
+}
+
+.donor-btn{
+    background:red;
+    color:#f5f5f5;
+    text-decoration:none;
+    min-width:260px;
+    padding:15px 30px;
+    font-size:20px;
+    font-weight:bold;
+    border-radius:10px;
+    text-align:center;
+    display:inline-block;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    transition:.4s;
+}
+
+.request-btn{
+    background:white;
+    color:#111;
+    text-decoration:none;
+    min-width:260px;
+    padding:15px 30px;
+    font-size:20px;
+    font-weight:bold;
+    border-radius:10px;
+    text-align:center;
+    display:inline-block;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    transition:.4s;
+}
+
+.donor-btn:hover,
+.request-btn:hover{
+    transform:translateY(-5px);
+}
+
+.container{
+    width:90%;
+    margin:auto;
+    padding:100px 0;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.title h1{
+    font-size:50px;
+    color:#b30000;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:35px;
+}
+
+.card{
+    background:white;
+    padding:40px 30px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+    transition:.4s;
+    opacity:0;
+    transform:translateY(50px);
+}
+
+.card.active{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.card:hover{
+    transform:translateY(-12px);
+}
+
+.card h2{
+    color:#b30000;
+    margin-bottom:15px;
+    font-size:30px;
+}
+
+.card p{
+    color:#555;
+    line-height:28px;
+}
+
+.stats{
+    width:100%;
+    background:#b30000;
+    padding:80px 10%;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:30px;
+    text-align:center;
+}
+
+.stat-box{
+    color:white;
+}
+
+.stat-box h1{
+    font-size:55px;
+    margin-bottom:10px;
+}
+
+.stat-box p{
+    font-size:20px;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@keyframes slideDown{
+
+    from{
+        transform:translateY(-100px);
+        opacity:0;
+    }
+
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}
+
+@keyframes zoomIn{
+
+    from{
+        transform:scale(.5);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    nav{
+        padding:15px 20px;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav ul{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    nav ul li a{
+        font-size:16px;
+    }
+
+    .content h1{
+        font-size:45px;
+    }
+
+    .content p{
+        width:100%;
+        font-size:18px;
+        line-height:30px;
+    }
+
+    .buttons{
+        flex-direction:column;
+        width:100%;
+    }
+
+    .donor-btn,
+    .request-btn{
+        width:100%;
+        max-width:350px;
+    }
+
+    .title h1{
+        font-size:38px;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .logo{
+        font-size:28px;
+    }
+
+    .content h1{
+        font-size:32px;
+    }
+
+    .content p{
+        font-size:16px;
+        line-height:28px;
+    }
+
+    .donor-btn,
+    .request-btn{
+        font-size:17px;
+        padding:14px 20px;
+        min-width:100%;
+    }
+
+    .title h1{
+        font-size:30px;
+    }
+
+    .card{
+        padding:30px 20px;
+    }
+
+    .card h2{
+        font-size:24px;
+    }
+
+    .card p{
+        font-size:15px;
+        line-height:25px;
+    }
+
+    .stat-box h1{
+        font-size:38px;
+    }
+
+    .stat-box p{
+        font-size:16px;
+    }
+
+}
+@media(max-width:500px){
+
+    .banner{
+        padding-top:160px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        BloodBank
+    </div>
+
+    <ul>
+
+        <li><a href="{% url 'home' %}">Home</a></li>
+
+        <li><a href="{% url 'login' %}">Login</a></li>
+
+        <li><a href="{% url 'register' %}">Register</a></li>
+
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+
+        <li><a href="{% url 'about' %}">About</a></li>
+
+    </ul>
+
+</nav>
+
+<section class="banner">
+
+    <img src="{% static 'images/banner.jpg' %}" alt="">
+
+    <div class="overlay"></div>
+
+    <div class="content">
+
+        <h1>Donate Blood Save Life</h1>
+
+        <p>
+            Blood donation is one of the most precious gifts you can give.
+            Your one donation can save multiple lives and bring hope to families.
+        </p>
+
+        <div class="buttons">
+
+            <a href="{% url 'register' %}" class="donor-btn">
+                Become Donor
+            </a>
+
+            <a href="{% url 'register' %}" class="request-btn">
+                Request Blood
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>
+        Blood Bank Management System © 2026
+    </p>
+
+</footer>
+
+<script>
+
+function showMessage(){
+
+    alert("Thank You For Joining Blood Bank");
+
+}
+
+window.addEventListener("scroll",function(){
+
+    let cards=document.querySelectorAll(".card");
+
+    cards.forEach(function(card){
+
+        let position=card.getBoundingClientRect().top;
+
+        let screen=window.innerHeight;
+
+        if(position < screen-100){
+
+            card.classList.add("active");
+
+        }
+
+    });
+
+});
+
+function counter(id,start,end,speed){
+
+    let obj=document.getElementById(id);
+
+    let current=start;
+
+    let timer=setInterval(function(){
+
+        current++;
+
+        obj.innerHTML=current;
+
+        if(current==end){
+
+            clearInterval(timer);
+
+        }
+
+    },speed);
+
+}
+
+counter("donor",0,120,20);
+
+counter("blood",0,350,10);
+
+counter("saved",0,500,8);
+
+</script>
+
+</body>
+</html>
