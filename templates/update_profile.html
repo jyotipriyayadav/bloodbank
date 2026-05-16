@@ -221,6 +221,8 @@ footer{
 
     <ul>
 
+    {% if user.role == "Donor" %}
+
         <li>
             <a href="{% url 'donor_dashboard' %}">
                 Dashboard
@@ -233,14 +235,35 @@ footer{
             </a>
         </li>
 
+    {% elif user.role == "Patient" %}
+
         <li>
-            <a href="{% url 'logout' %}">
-                Logout
+            <a href="{% url 'patient_dashboard' %}">
+                Dashboard
             </a>
         </li>
 
-    </ul>
+        <li>
+            <a href="{% url 'blood_request' %}">
+                Request Blood
+            </a>
+        </li>
 
+        <li>
+            <a href="{% url 'blood_availability' %}">
+                Blood Availability
+            </a>
+        </li>
+
+    {% endif %}
+
+    <li>
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+    </li>
+
+</ul>
 </nav>
 
 <section class="update-section">

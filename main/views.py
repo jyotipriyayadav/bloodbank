@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Register,BloodDonation,BloodRequest
 from django.contrib import messages
+from .models import *
 
 
 def home(request):
@@ -41,40 +42,49 @@ def donor_dashboard(request):
     }
 
     return render(request,'donor_dashboard.html',context)
-
 def update_profile(request):
 
-    if not request.session.get('user_id'):
+    if 'user_id' not in request.session:
 
         return redirect('login')
 
-    user_id=request.session.get('user_id')
+    user = Register.objects.get(
+        id=request.session['user_id']
+    )
 
-    user=Register.objects.get(id=user_id)
+    if request.method == "POST":
 
-    if request.method=="POST":
-
-        user.name=request.POST.get('name')
-
-        user.email=request.POST.get('email')
-
-        user.phone=request.POST.get('phone')
-
-        user.blood_group=request.POST.get('blood_group')
+        user.name = request.POST.get('name')
+        user.email = request.POST.get('email')
+        user.phone = request.POST.get('phone')
+        user.blood_group = request.POST.get('blood_group')
 
         user.save()
 
-        messages.success(request,'Profile Updated Successfully')
-        
-        return redirect('donor_dashboard')
+        messages.success(
+            request,
+            'Profile Updated Successfully'
+        )
 
-    context={
+        if user.role == "Donor":
+
+            return redirect('donor_dashboard')
+
+        elif user.role == "Patient":
+
+            return redirect('patient_dashboard')
+
+    context = {
 
         'user':user
 
     }
 
-    return render(request,'update_profile.html',context)
+    return render(
+        request,
+        'update_profile.html',
+        context
+    )
 
 
 def donate_blood(request):
@@ -123,6 +133,27 @@ def donate_blood(request):
 
     return render(request,'donate_blood.html',context)
 
+def patient_dashboard(request):
+
+    if 'user_id' not in request.session:
+
+        return redirect('login')
+
+    patient = Register.objects.get(
+        id=request.session['user_id']
+    )
+
+    context = {
+
+        'patient':patient
+
+    }
+
+    return render(
+        request,
+        'patient_dashboard.html',
+        context
+    )
 
 def blood_request(request):
 
@@ -327,7 +358,7 @@ def login(request):
 
             elif user.role=="Patient":
 
-                return redirect('blood_request')
+                return redirect('patient_dashboard')
 
         else:
 
