@@ -275,7 +275,6 @@ def manage_requests(request):
 
     return render(request,'manage_requests.html',context)
 
-
 def register(request):
 
     if request.method=="POST":
@@ -299,6 +298,15 @@ def register(request):
         if check_email:
 
             messages.error(request,'Email Already Exists')
+
+            return redirect('register')
+
+        if len(phone) != 10:
+
+            messages.error(
+                request,
+                'Phone Number Must Be 10 Digits'
+            )
 
             return redirect('register')
 
