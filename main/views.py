@@ -143,9 +143,14 @@ def patient_dashboard(request):
         id=request.session['user_id']
     )
 
+    requests = BloodRequest.objects.filter(
+        patient_name=patient.name
+    )
+
     context = {
 
-        'patient':patient
+        'patient':patient,
+        'requests':requests
 
     }
 
@@ -205,9 +210,8 @@ def blood_request(request):
 def blood_availability(request):
 
     blood_group=request.GET.get('blood_group')
-
-    donors=Register.objects.filter(role='Donor')
-
+    donors = BloodDonation.objects.all()
+    
     if blood_group:
 
         donors=donors.filter(

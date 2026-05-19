@@ -168,6 +168,35 @@ nav ul li a:hover{
     line-height:25px;
 }
 
+.status{
+
+    padding:10px 20px;
+    border-radius:30px;
+    color:white;
+    display:inline-block;
+    margin-top:10px;
+    font-weight:bold;
+
+}
+
+.pending{
+
+    background:orange;
+
+}
+
+.approved{
+
+    background:green;
+
+}
+
+.rejected{
+
+    background:red;
+
+}
+
 footer{
     background:#111;
     color:white;
@@ -410,6 +439,68 @@ footer{
                 <p>{{ patient.blood_group }}</p>
 
             </div>
+
+        </div>
+
+    </div>
+
+    <div class="profile">
+
+        <h2>Blood Request Status</h2>
+
+        <div class="profile-info">
+
+            {% for request in requests %}
+
+            <div class="box">
+
+                <h3>Blood Group</h3>
+
+                <p>{{ request.blood_group }}</p>
+
+                <h3>Status</h3>
+
+                <p>
+
+                    {% if request.status == "Pending" %}
+
+                        <span class="status pending">
+
+                            Pending
+
+                        </span>
+
+                    {% elif request.status == "Approved" %}
+
+                        <span class="status approved">
+
+                            Approved
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="status rejected">
+
+                            Rejected
+
+                        </span>
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+            {% empty %}
+
+            <div class="box">
+
+                <h3>No Requests Found</h3>
+
+            </div>
+
+            {% endfor %}
 
         </div>
 
