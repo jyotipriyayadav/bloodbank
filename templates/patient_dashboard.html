@@ -47,9 +47,21 @@ nav{
 }
 
 .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
     color:white;
     font-size:32px;
     font-weight:bold;
+}
+
+.logo img{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:white;
+    padding:2px;
+    object-fit:cover;
 }
 
 nav ul{
@@ -249,6 +261,10 @@ footer{
     .logo{
         font-size:28px;
     }
+    .logo img{
+        width: 35px;
+        height: 35px;
+    }
 
     .dashboard{
         width:95%;
@@ -303,7 +319,11 @@ footer{
 <nav>
 
     <div class="logo">
-        BloodBank
+
+    <img src="{% static 'images/blood.jpg' %}" alt="Logo">
+
+    <span>BloodBank</span>
+
     </div>
 
     <ul>
