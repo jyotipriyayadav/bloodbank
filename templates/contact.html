@@ -8,19 +8,24 @@
 
 <title>Contact Us</title>
 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial;
+    font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f5f5f5;
+    background:linear-gradient(to right,#fff5f5,#ffeaea);
     overflow-x:hidden;
 }
+
+/* Navbar */
 
 nav{
     width:100%;
@@ -66,68 +71,74 @@ nav ul li a:hover{
     color:#ffd6d6;
 }
 
+/* Contact Section */
+
 .contact-section{
     width:90%;
-    margin:70px auto;
+    margin:60px auto;
 }
 
 .heading{
     text-align:center;
-    margin-bottom:50px;
+    margin-bottom:40px;
 }
 
 .heading h1{
     color:#b30000;
-    font-size:60px;
-    margin-bottom:15px;
+    font-size:55px;
+    margin-bottom:10px;
 }
 
 .heading p{
-    color:#555;
-    font-size:20px;
+    color:#666;
+    font-size:18px;
 }
 
-.contact-box{
-    background:white;
-    padding:50px;
-    border-radius:15px;
-    box-shadow:0 0 15px rgba(0,0,0,.1);
+/* Contact Cards */
 
+.contact-box{
+    width:85%;
+    margin:auto;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:30px;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
 }
 
 .box{
-    background:#f5f5f5;
-    padding:35px;
-    border-radius:12px;
+    background:white;
+    padding:25px 20px;
+    border-radius:15px;
     text-align:center;
-    transition:.4s;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    border-top:4px solid #b30000;
 }
 
-.box:hover{
-    transform:translateY(-8px);
+.box i{
+    font-size:35px;
+    color:#b30000;
+    margin-bottom:10px;
 }
 
 .box h2{
     color:#b30000;
-    margin-bottom:20px;
-    font-size:32px;
+    font-size:24px;
+    margin-bottom:10px;
 }
 
 .box p{
     color:#555;
-    font-size:18px;
-    line-height:30px;
+    font-size:16px;
+    line-height:26px;
 }
+
+/* Footer */
 
 footer{
     background:#111;
     color:white;
     text-align:center;
     padding:25px;
-    margin-top:70px;
+    margin-top:60px;
 }
 
 /* Responsive */
@@ -146,34 +157,13 @@ footer{
         gap:15px;
     }
 
-    nav ul li a{
-        font-size:16px;
+    .contact-box{
+        width:95%;
+        grid-template-columns:1fr;
     }
 
     .heading h1{
-        font-size:42px;
-    }
-
-    .heading p{
-        font-size:18px;
-    }
-
-    .contact-box{
-        grid-template-columns:1fr;
-        padding:30px;
-    }
-
-    .box{
-        padding:30px 20px;
-    }
-
-    .box h2{
-        font-size:28px;
-    }
-
-    .box p{
-        font-size:16px;
-        line-height:28px;
+        font-size:40px;
     }
 
 }
@@ -183,14 +173,10 @@ footer{
     .logo{
         font-size:28px;
     }
-    .logo img{
-        width: 35px;
-        height: 35px;
-    }
 
-    .contact-section{
-        width:95%;
-        margin:40px auto;
+    .logo img{
+        width:35px;
+        height:35px;
     }
 
     .heading h1{
@@ -199,14 +185,6 @@ footer{
 
     .heading p{
         font-size:16px;
-    }
-
-    .contact-box{
-        padding:20px;
-    }
-
-    .box h2{
-        font-size:24px;
     }
 
 }
@@ -221,37 +199,21 @@ footer{
 
     <div class="logo">
 
-    <img src="{% static 'images/blood.jpg' %}" alt="Logo">
+        <img src="{% static 'images/blood.jpg' %}" alt="Logo">
 
-    <span>BloodBank</span>
+        <span>BloodBank</span>
 
-</div>
+    </div>
 
     <ul>
 
-        <li>
-            <a href="{% url 'home' %}">
-                Home
-            </a>
-        </li>
+        <li><a href="{% url 'home' %}">Home</a></li>
 
-        <li>
-            <a href="{% url 'login' %}">
-                Login
-            </a>
-        </li>
+        <li><a href="{% url 'login' %}">Login</a></li>
 
-        <li>
-            <a href="{% url 'register' %}">
-                Register
-            </a>
-        </li>
+        <li><a href="{% url 'register' %}">Register</a></li>
 
-        <li>
-            <a href="{% url 'about' %}">
-                About
-            </a>
-        </li>
+        <li><a href="{% url 'about' %}">About</a></li>
 
     </ul>
 
@@ -263,15 +225,15 @@ footer{
 
         <h1>Contact Us</h1>
 
-        <p>
-            We Are Always Ready To Help Save Lives
-        </p>
+        <p>We Are Always Ready To Help Save Lives</p>
 
     </div>
 
     <div class="contact-box">
 
         <div class="box">
+
+            <i class="fas fa-location-dot"></i>
 
             <h2>Address</h2>
 
@@ -285,6 +247,8 @@ footer{
 
         <div class="box">
 
+            <i class="fas fa-phone"></i>
+
             <h2>Phone</h2>
 
             <p>
@@ -295,6 +259,8 @@ footer{
         </div>
 
         <div class="box">
+
+            <i class="fas fa-envelope"></i>
 
             <h2>Email</h2>
 

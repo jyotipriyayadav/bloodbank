@@ -148,6 +148,144 @@ footer{
     text-align:center;
     padding:25px;
 }
+.about{
+    width:90%;
+    margin:70px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+    gap:50px;
+    align-items:center;
+}
+
+.about-image img{
+    width:100%;
+    border-radius:20px;
+    box-shadow:0 15px 30px rgba(0,0,0,.15);
+    transition:.5s;
+}
+
+.about-image img:hover{
+    transform:scale(1.03);
+}
+
+.about-content h1{
+    font-size:60px;
+    color:#b30000;
+    margin-bottom:20px;
+}
+
+.about-content p{
+    font-size:18px;
+    line-height:32px;
+    color:#555;
+    margin-bottom:15px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:15px 35px;
+    background:#b30000;
+    color:white;
+    text-decoration:none;
+    border-radius:40px;
+    transition:.4s;
+}
+
+.btn:hover{
+    background:#800000;
+}
+
+.boxes{
+    width:90%;
+    margin:70px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.box{
+    background:white;
+    padding:35px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    transition:.4s;
+}
+
+.box:hover{
+    transform:translateY(-10px);
+}
+
+.box h2{
+    color:#b30000;
+    margin-bottom:15px;
+}
+
+.stats{
+    width:90%;
+    margin:70px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.stat{
+    background:#b30000;
+    color:white;
+    text-align:center;
+    padding:40px 20px;
+    border-radius:15px;
+}
+
+.stat h1{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.mission{
+    width:85%;
+    margin:80px auto;
+    text-align:center;
+}
+
+.mission h1{
+    color:#b30000;
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+.mission p{
+    font-size:20px;
+    color:#555;
+    line-height:35px;
+}
+
+.cta{
+    background:#b30000;
+    color:white;
+    text-align:center;
+    padding:80px 20px;
+}
+
+.cta h1{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.cta p{
+    font-size:20px;
+    margin-bottom:25px;
+}
+
+.cta a{
+    background:white;
+    color:#b30000;
+    text-decoration:none;
+    padding:15px 35px;
+    border-radius:40px;
+    font-weight:bold;
+}
 
 @keyframes fadeIn{
 
@@ -280,25 +418,27 @@ footer{
 <section class="about">
 
     <div class="about-image">
-
-        <img src="{% static 'images/saveblood.jpg' %}" alt="">
-
+        <img src="{% static 'images/saveblood.jpg' %}" alt="Blood Donation">
     </div>
 
     <div class="about-content">
 
-        <h1>About Us</h1>
+        <h1>Donate Blood,<br>Save Lives ❤️</h1>
 
         <p>
-            Our Blood Bank Management System helps connect blood donors
-            with patients in emergency situations. We aim to save lives
-            through quick and easy blood availability services.
+            Blood Bank Management System connects donors and patients
+            quickly during emergencies. Our mission is to ensure that
+            no life is lost due to blood shortage.
         </p>
 
         <p>
-            Donate blood today and become a real-life hero for someone
-            who needs urgent help.
+            Every blood donor is a real-life hero. Join our community
+            and help save lives with a simple act of kindness.
         </p>
+
+        <a href="{% url 'register' %}" class="btn">
+            Become A Donor
+        </a>
 
     </div>
 
@@ -307,37 +447,77 @@ footer{
 <section class="boxes">
 
     <div class="box">
-
-        <h2>Our Mission</h2>
-
+        <h2>🩸 Blood Availability</h2>
         <p>
-            To provide blood quickly and safely to every patient in need.
+            Find blood donors instantly during emergency situations.
         </p>
-
     </div>
 
     <div class="box">
-
-        <h2>Our Vision</h2>
-
+        <h2>⚡ Quick Response</h2>
         <p>
-            Building a healthy society where blood is available anytime.
+            Fast donor search and request management system.
         </p>
-
     </div>
 
     <div class="box">
-
-        <h2>24/7 Support</h2>
-
+        <h2>🔒 Secure Data</h2>
         <p>
-            Our support team is always available for emergency situations.
+            Your information is protected with a secure system.
         </p>
-
     </div>
 
 </section>
 
+<section class="stats">
+
+    <div class="stat">
+        <h1>500+</h1>
+        <p>Registered Donors</p>
+    </div>
+
+    <div class="stat">
+        <h1>300+</h1>
+        <p>Lives Saved</p>
+    </div>
+
+    <div class="stat">
+        <h1>100+</h1>
+        <p>Partner Hospitals</p>
+    </div>
+
+    <div class="stat">
+        <h1>24/7</h1>
+        <p>Emergency Support</p>
+    </div>
+
+</section>
+
+<section class="mission">
+
+    <h1>Our Mission</h1>
+
+    <p>
+        To provide blood quickly, safely, and efficiently to every
+        patient in need while encouraging voluntary blood donation
+        across the community.
+    </p>
+
+</section>
+
+<section class="cta">
+
+    <h1>Become A Hero Today ❤️</h1>
+
+    <p>
+        One blood donation can save multiple lives.
+    </p>
+
+    <a href="{% url 'register' %}">
+        Register Now
+    </a>
+
+</section>
 <footer>
 
     <p>
@@ -345,16 +525,6 @@ footer{
     </p>
 
 </footer>
-
-<script>
-
-function showMessage(){
-
-    alert("Welcome To Blood Bank Management System");
-
-}
-
-</script>
 
 </body>
 </html>
